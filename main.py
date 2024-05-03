@@ -12,13 +12,13 @@ classifier = pipeline("image-classification", model="AdamCodd/vit-base-nsfw-dete
 async def root():
     return {'example': 'This is an example', 'data': 10}
 
-@app.get('/validate-text/')
+@app.get('/validate-text')
 async def validate_text(text: str):
     result = nlp(text)
-    return {'data': text, 'result': result}
+    return {'result': result}
 
 @app.get('/validate-image')
 async def validate_image(url: str):
     image = Image.open(requests.get(url, stream=True).raw)
     result = classifier(image)
-    return {'url':url, 'result': result}
+    return {'result': result}
